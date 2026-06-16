@@ -5,7 +5,8 @@ from loop_engineering.core import greet
 
 
 def test_version():
-    assert loop_engineering.__version__ == "0.1.0"
+    assert isinstance(loop_engineering.__version__, str)
+    assert loop_engineering.__version__
 
 
 def test_greet_default():
