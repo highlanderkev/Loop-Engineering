@@ -79,14 +79,24 @@ class Analyzer:
                 anomaly_detected=False,
                 details="No monitoring data available.",
             )
-        latest_value = float(records[-1].value)
+        try:
+            raw_values = [float(r.value) for r in records]
+        except (TypeError, ValueError) as exc:
+            return AnalysisResult(
+                metric_name=metric_name,
+                timing=AdaptationTiming.REACTIVE,
+                trigger=None,
+                anomaly_detected=False,
+                details=f"Non-numeric monitoring value for '{metric_name}': {exc}",
+            )
+        latest_value = raw_values[-1]
         anomaly = latest_value > threshold
         return AnalysisResult(
             metric_name=metric_name,
             timing=AdaptationTiming.REACTIVE,
             trigger=trigger if anomaly else None,
             anomaly_detected=anomaly,
-            raw_values=[float(r.value) for r in records],
+            raw_values=raw_values,
             details=(
                 f"Latest value {latest_value} {'>' if anomaly else '<='} "
                 f"threshold {threshold}."
@@ -118,7 +128,17 @@ class Analyzer:
             :attr:`~loop_engineering.taxonomy.AdaptationTiming.PROACTIVE`.
         """
         records = self._kb.get_monitoring_records(metric_name)
-        values = [float(r.value) for r in records[-window:]]
+        try:
+            values = [float(r.value) for r in records[-window:]]
+        except (TypeError, ValueError) as exc:
+            return AnalysisResult(
+                metric_name=metric_name,
+                timing=AdaptationTiming.PROACTIVE,
+                trigger=None,
+                anomaly_detected=False,
+                predicted_value=None,
+                details=f"Non-numeric monitoring value for '{metric_name}': {exc}",
+            )
         if len(values) < 2:
             return AnalysisResult(
                 metric_name=metric_name,

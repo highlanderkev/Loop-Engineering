@@ -38,8 +38,8 @@ class Policy:
 
     Attributes:
         name:      Unique policy identifier.
-        condition: A string expression evaluated against the metric name and value
-                   (e.g. ``"cpu_usage > 80"``).
+        condition: A string predicate used for simple matching by the Planner
+                   (e.g. it may contain the metric name like ``"cpu_usage"``).
         action:    Name of the effector action to invoke when the condition holds.
         priority:  Higher-priority policies are evaluated first.
     """
