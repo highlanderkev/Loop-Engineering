@@ -38,6 +38,10 @@ from loop_engineering.knowledge import (
     MonitoringRecord,
     Policy,
 )
+from loop_engineering.langgraph_agent import (
+    LangGraphMAPEKAgent,
+    LongRunningAgentResult,
+)
 from loop_engineering.mape_k import LoopResult, MAPEKLoop
 from loop_engineering.monitor import Monitor, Sensor
 from loop_engineering.plan import AdaptationAction, AdaptationPlan, Planner
@@ -86,4 +90,7 @@ __all__ = [
     # mape-k
     "MAPEKLoop",
     "LoopResult",
+    # langgraph orchestration
+    "LangGraphMAPEKAgent",
+    "LongRunningAgentResult",
 ]

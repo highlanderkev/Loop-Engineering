@@ -77,6 +77,21 @@ print(result.anomalies_detected)   # 1
 print(result.actions_succeeded)    # 1
 ```
 
+### Long-running agents with LangGraph
+
+```python
+from loop_engineering import LangGraphMAPEKAgent
+
+agent = LangGraphMAPEKAgent()
+
+# Run two persisted cycles on the same thread
+first = agent.run(thread_id="sas-agent-1", cycles=1)
+second = agent.run(thread_id="sas-agent-1", cycles=1)
+
+print(first.cycles_completed)   # 1
+print(second.cycles_completed)  # 2
+```
+
 ### Running Tests
 
 ```bash
@@ -103,6 +118,7 @@ Loop-Engineering/
 │       ├── plan.py          # Planner – rules-based & utility-based planning
 │       ├── execute.py       # Executor – effector registry & plan execution
 │       ├── mape_k.py        # MAPEKLoop – full MAPE-K orchestrator
+│       ├── langgraph_agent.py # LangGraph long-running orchestration
 │       └── core.py          # legacy scaffold helpers
 ├── tests/
 │   ├── test_taxonomy.py
