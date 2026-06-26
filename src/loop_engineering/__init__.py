@@ -26,6 +26,10 @@ MAPE components::
 Orchestrator::
 
     from loop_engineering import MAPEKLoop, LoopResult
+
+Long-running orchestrator (LangGraph)::
+
+    from loop_engineering import LangGraphMAPEKAgent, LongRunningAgentResult
 """
 
 from importlib.metadata import PackageNotFoundError, version
@@ -37,6 +41,10 @@ from loop_engineering.knowledge import (
     KnowledgeBase,
     MonitoringRecord,
     Policy,
+)
+from loop_engineering.langgraph_agent import (
+    LangGraphMAPEKAgent,
+    LongRunningAgentResult,
 )
 from loop_engineering.mape_k import LoopResult, MAPEKLoop
 from loop_engineering.monitor import Monitor, Sensor
@@ -86,4 +94,7 @@ __all__ = [
     # mape-k
     "MAPEKLoop",
     "LoopResult",
+    # langgraph orchestration
+    "LangGraphMAPEKAgent",
+    "LongRunningAgentResult",
 ]
