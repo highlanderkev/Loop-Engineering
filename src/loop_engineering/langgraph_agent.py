@@ -15,7 +15,7 @@ from loop_engineering.taxonomy import TriggerSource
 class AgentState(TypedDict, total=False):
     """State persisted by LangGraph for each agent thread."""
 
-    anomaly_thresholds: dict[str, float]
+anomaly_thresholds: dict[str, float] | None
     trigger: TriggerSource
     target_cycles: int
     cycles_completed: int
@@ -89,8 +89,9 @@ class LangGraphMAPEKAgent:
             raise ValueError("cycles must be >= 1")
 
         config = self._thread_config(thread_id)
-        snapshot = self._graph.get_state(config)
-        current_cycles = int(snapshot.values.get("cycles_completed", 0))
+snapshot = self._graph.get_state(config)
+snapshot_values = snapshot.values or {}
+current_cycles = int(snapshot_values.get("cycles_completed", 0))
         target_cycles = current_cycles + cycles
 
         state = self._graph.invoke(
