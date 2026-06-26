@@ -26,6 +26,10 @@ MAPE components::
 Orchestrator::
 
     from loop_engineering import MAPEKLoop, LoopResult
+
+Long-running orchestrator (LangGraph)::
+
+    from loop_engineering import LangGraphMAPEKAgent, LongRunningAgentResult
 """
 
 from importlib.metadata import PackageNotFoundError, version
